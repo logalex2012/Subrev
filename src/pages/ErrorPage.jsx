@@ -34,7 +34,7 @@ export function ErrorPage({ status = 404 }) {
     ERRORS[status] ?? ERRORS[404];
 
   return (
-    <div className="relative flex min-h-screen flex-col items-center justify-center overflow-hidden bg-background px-6 text-center">
+    <div className="relative flex min-h-dvh flex-col items-center justify-center overflow-hidden bg-background px-6 text-center">
       {/* bg glow */}
       <div
         aria-hidden

@@ -23,6 +23,7 @@ import {
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ThemeToggle } from '../ThemeToggle.jsx';
+import { MobileMenuButton } from '../MobileMenu.jsx';
 import { getCommunities, joinCommunity, leaveCommunity, createCommunity } from '../communityStore.js';
 
 const TYPE_LABELS = { class: 'Класс', channel: 'Канал', community: 'Сообщество' };
@@ -40,7 +41,10 @@ function BackHeader({ title }) {
         </svg>
       </Button>
       <span className="font-display font-bold tracking-tight text-foreground">{title}</span>
-      <div className="ml-auto"><ThemeToggle /></div>
+      <div className="ml-auto flex items-center gap-2">
+        <ThemeToggle />
+        <MobileMenuButton className="sm:hidden" />
+      </div>
     </header>
   );
 }
@@ -249,12 +253,12 @@ export default function Communities() {
   const discover = filtered.filter(c => !c.joined);
 
   return (
-    <div className="flex min-h-screen flex-col bg-background text-foreground">
+    <div className="flex min-h-dvh flex-col bg-background text-foreground">
       <BackHeader title="Сообщества" />
 
       <main className="mx-auto w-full max-w-2xl flex-1 px-4 py-6 sm:px-6">
         {/* Search + create */}
-        <div className="mb-6 flex gap-2">
+        <div className="mb-6 flex flex-col gap-2 sm:flex-row">
           <div className="relative flex-1">
             <svg className="absolute left-3.5 top-1/2 -translate-y-1/2 text-muted" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
               <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
@@ -266,7 +270,7 @@ export default function Communities() {
               className="w-full rounded-xl border border-border bg-surface-secondary py-2.5 pl-10 pr-4 text-sm text-foreground placeholder:text-muted focus:border-indigo-500 focus:outline-none"
             />
           </div>
-          <Button variant="primary" onPress={() => setShowCreate(true)}>
+          <Button variant="primary" className="w-full sm:w-auto" onPress={() => setShowCreate(true)}>
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="mr-1.5" aria-hidden>
               <line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>
             </svg>
@@ -275,7 +279,7 @@ export default function Communities() {
         </div>
 
         <Tabs defaultSelectedKey="joined">
-          <TabList className="mb-6">
+          <TabList className="mb-6 -mx-4 overflow-x-auto px-4 whitespace-nowrap [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
             <Tab id="joined">Мои {joined.length > 0 && <span className="ml-1 rounded-full bg-indigo-500/20 px-1.5 py-0.5 text-[10px] font-bold text-indigo-500">{joined.length}</span>}</Tab>
             <Tab id="discover">Найти {discover.length > 0 && <span className="ml-1 rounded-full bg-surface-secondary px-1.5 py-0.5 text-[10px] font-bold text-muted">{discover.length}</span>}</Tab>
           </TabList>

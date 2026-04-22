@@ -13,6 +13,7 @@ import {
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ThemeToggle } from '../ThemeToggle.jsx';
+import { MobileMenuButton } from '../MobileMenu.jsx';
 import { getProfile, saveProfile } from '../userStore.js';
 
 function BackHeader({ title }) {
@@ -25,7 +26,10 @@ function BackHeader({ title }) {
         </svg>
       </Button>
       <span className="font-display font-bold tracking-tight text-foreground">{title}</span>
-      <div className="ml-auto"><ThemeToggle /></div>
+      <div className="ml-auto flex items-center gap-2">
+        <ThemeToggle />
+        <MobileMenuButton className="sm:hidden" />
+      </div>
     </header>
   );
 }
@@ -92,7 +96,7 @@ export default function Settings() {
   }
 
   return (
-    <div className="flex min-h-screen flex-col bg-background text-foreground">
+    <div className="flex min-h-dvh flex-col bg-background text-foreground">
       <BackHeader title="Настройки" />
 
       <main className="mx-auto w-full max-w-2xl flex-1 px-4 py-6 sm:px-6">

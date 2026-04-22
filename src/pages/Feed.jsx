@@ -41,6 +41,7 @@ import {
 import { useRef, useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ThemeToggle } from '../ThemeToggle.jsx';
+import { MobileMenuButton } from '../MobileMenu.jsx';
 import { getChangelog } from '../changelog.js';
 import { getProfile, getFollowing, toggleFollow } from '../userStore.js';
 import { getCommunities } from '../communityStore.js';
@@ -619,11 +620,12 @@ export default function Feed() {
   const CARD_PROPS = { onReact: handleReact, onComment: handleComment, onDelete: handleDelete, onRepost: handleRepost, onHashtag: handleHashtag };
 
   return (
-    <div className="flex min-h-screen flex-col bg-background text-foreground">
+    <div className="flex min-h-dvh flex-col bg-background text-foreground">
       {/* Navbar */}
       <header className="sticky top-0 z-30 border-b border-border bg-background/80 backdrop-blur-md">
         <div className="flex items-center justify-between gap-4 px-5 py-3 sm:px-8">
           <div className="flex items-center gap-2.5">
+            <MobileMenuButton className="sm:hidden" />
             <img src="/icon1ej.png" alt="SubreV" className="size-8 rounded-xl" />
             <span className="font-display text-lg font-bold tracking-tight">SubreV</span>
           </div>
@@ -634,25 +636,25 @@ export default function Feed() {
             {/* Search toggle */}
             <Tooltip>
               <TooltipTrigger>
-                <Button isIconOnly variant={searchOpen ? 'secondary' : 'ghost'} size="sm" className="text-muted" onPress={() => setSearchOpen(v => !v)} aria-label="Поиск">
+                <Button isIconOnly variant={searchOpen ? 'secondary' : 'ghost'} size="sm" className="hidden text-muted sm:inline-flex" onPress={() => setSearchOpen(v => !v)} aria-label="Поиск">
                   <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
                     <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
                   </svg>
                 </Button>
               </TooltipTrigger>
-              <TooltipContent>Поиск</TooltipContent>
+              <TooltipContent className="hidden sm:block">Поиск</TooltipContent>
             </Tooltip>
 
             {/* Messages */}
             <Tooltip>
               <TooltipTrigger>
-                <Button isIconOnly variant="ghost" size="sm" className="text-muted" onPress={() => navigate('/messages')} aria-label="Сообщения">
+                <Button isIconOnly variant="ghost" size="sm" className="hidden text-muted sm:inline-flex" onPress={() => navigate('/messages')} aria-label="Сообщения">
                   <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
                     <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
                   </svg>
                 </Button>
               </TooltipTrigger>
-              <TooltipContent>Сообщения</TooltipContent>
+              <TooltipContent className="hidden sm:block">Сообщения</TooltipContent>
             </Tooltip>
 
             {/* Новости */}
@@ -716,7 +718,7 @@ export default function Feed() {
             <Tooltip>
               <TooltipTrigger>
                 <BadgeAnchor>
-                  <Button isIconOnly variant="ghost" size="sm" className="text-muted" aria-label={`Уведомления: ${notifCount}`} onPress={() => navigate('/notifications')}>
+                  <Button isIconOnly variant="ghost" size="sm" className="hidden text-muted sm:inline-flex" aria-label={`Уведомления: ${notifCount}`} onPress={() => navigate('/notifications')}>
                     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
                       <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/>
                     </svg>
@@ -724,13 +726,13 @@ export default function Feed() {
                   <Badge color="danger" size="sm">{notifCount}</Badge>
                 </BadgeAnchor>
               </TooltipTrigger>
-              <TooltipContent>{notifCount} новых уведомления</TooltipContent>
+              <TooltipContent className="hidden sm:block">{notifCount} новых уведомления</TooltipContent>
             </Tooltip>
 
             {/* Profile dropdown */}
             <Dropdown>
               <DropdownTrigger>
-                <button className="flex items-center gap-2 rounded-full p-1 transition-colors hover:bg-surface-secondary" aria-label="Профиль">
+                <button className="hidden items-center gap-2 rounded-full p-1 transition-colors hover:bg-surface-secondary sm:flex" aria-label="Профиль">
                   <UserAvatar src={me.avatar} fallback={me.initials} size="sm" />
                 </button>
               </DropdownTrigger>
@@ -800,7 +802,7 @@ export default function Feed() {
       {/* Content */}
       <main className="mx-auto w-full max-w-2xl flex-1 px-4 py-6 sm:px-6">
         <Tabs defaultSelectedKey="feed">
-          <TabList className="mb-6">
+          <TabList className="mb-6 -mx-4 overflow-x-auto px-4 whitespace-nowrap [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
             <Tab id="feed">Лента</Tab>
             <Tab id="following">Подписки {following.length > 0 && <span className="ml-1 rounded-full bg-indigo-500/20 px-1.5 py-0.5 text-[10px] font-bold text-indigo-500">{following.length}</span>}</Tab>
             <Tab id="communities">Сообщества {joinedCommunities.length > 0 && <span className="ml-1 rounded-full bg-emerald-500/20 px-1.5 py-0.5 text-[10px] font-bold text-emerald-600">{joinedCommunities.length}</span>}</Tab>
