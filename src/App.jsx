@@ -115,7 +115,7 @@ function App() {
   }
 
   return (
-    <div className="flex min-h-screen flex-col bg-slate-50 text-foreground dark:bg-[oklch(12%_0.005_285.823)] lg:flex-row">
+    <div className="flex min-h-dvh flex-col bg-slate-50 text-foreground dark:bg-[oklch(12%_0.005_285.823)] lg:flex-row">
 
       {/* ─── Left brand panel ─── */}
       <div className="w-full lg:sticky lg:top-0 lg:h-screen lg:w-5/12 xl:w-[45%]">

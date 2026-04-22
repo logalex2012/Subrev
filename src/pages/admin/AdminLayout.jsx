@@ -186,7 +186,7 @@ export default function AdminLayout({ children }) {
   );
 
   return (
-    <div className="flex min-h-screen bg-[#0d0d14] text-white">
+    <div className="flex min-h-dvh bg-[#0d0d14] text-white">
       {/* Desktop sidebar */}
       <aside
         className={`hidden flex-shrink-0 flex-col border-r border-white/8 bg-[#12121e] transition-all duration-300 lg:flex ${

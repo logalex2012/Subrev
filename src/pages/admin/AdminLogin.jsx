@@ -24,7 +24,7 @@ export default function AdminLogin() {
   }
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-[#0d0d14] px-4">
+    <div className="flex min-h-dvh items-center justify-center bg-[#0d0d14] px-4">
       {/* Background glow */}
       <div aria-hidden className="pointer-events-none fixed inset-0 bg-[radial-gradient(ellipse_70%_50%_at_50%_-10%,rgba(99,102,241,0.25),transparent_60%)]" />
 

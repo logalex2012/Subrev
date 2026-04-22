@@ -101,7 +101,7 @@ export default function Messages() {
   const totalUnread = conversations.reduce((sum, c) => sum + c.unread, 0);
 
   return (
-    <div className="flex h-screen flex-col bg-background text-foreground">
+    <div className="flex h-dvh flex-col bg-background text-foreground">
       {/* Header */}
       <header className="flex h-14 shrink-0 items-center gap-3 border-b border-border bg-background/80 px-5 backdrop-blur-md sm:px-8">
         <Button isIconOnly variant="ghost" size="sm" onPress={() => mobileView === 'chat' ? setMobileView('list') : navigate('/feed')} aria-label="Назад">

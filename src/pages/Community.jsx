@@ -22,6 +22,7 @@ import {
 import { useState, useEffect, useRef } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { ThemeToggle } from '../ThemeToggle.jsx';
+import { MobileMenuButton } from '../MobileMenu.jsx';
 import { getProfile } from '../userStore.js';
 import {
   getCommunity,
@@ -45,7 +46,10 @@ function BackHeader({ title }) {
         </svg>
       </Button>
       <span className="font-display font-bold tracking-tight text-foreground">{title}</span>
-      <div className="ml-auto flex items-center gap-2"><ThemeToggle /></div>
+      <div className="ml-auto flex items-center gap-2">
+        <ThemeToggle />
+        <MobileMenuButton className="sm:hidden" />
+      </div>
     </header>
   );
 }
@@ -173,7 +177,7 @@ export default function Community() {
 
   if (!community) {
     return (
-      <div className="flex min-h-screen flex-col items-center justify-center bg-background text-foreground">
+      <div className="flex min-h-dvh flex-col items-center justify-center bg-background text-foreground">
         <span className="text-5xl">🏛</span>
         <Text size="lg" className="mt-4 font-semibold">Сообщество не найдено</Text>
         <Button variant="primary" size="sm" className="mt-4" onPress={() => navigate('/communities')}>
@@ -227,7 +231,7 @@ export default function Community() {
   }
 
   return (
-    <div className="flex min-h-screen flex-col bg-background text-foreground">
+    <div className="flex min-h-dvh flex-col bg-background text-foreground">
       <BackHeader title={community.name} />
 
       <main className="mx-auto w-full max-w-2xl flex-1 px-4 py-0 sm:px-6">
@@ -242,7 +246,7 @@ export default function Community() {
             {community.emoji}
           </div>
 
-          <div className="mt-3 flex items-start justify-between gap-3">
+          <div className="mt-3 flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
             <div>
               <div className="flex items-center gap-2">
                 <h1 className="font-display text-xl font-bold tracking-tight text-foreground">{community.name}</h1>
@@ -253,7 +257,7 @@ export default function Community() {
               <Text size="sm" variant="muted" className="mt-0.5 block">{community.description}</Text>
               <Text size="xs" variant="muted" className="mt-1 block">👥 {community.memberCount} участников · с {community.createdAt}</Text>
             </div>
-            <div className="flex shrink-0 items-center gap-2 pt-1">
+            <div className="flex shrink-0 flex-wrap items-center gap-2 pt-1">
               <Tooltip>
                 <TooltipTrigger>
                   <Button
@@ -280,9 +284,9 @@ export default function Community() {
               </Tooltip>
 
               {community.joined ? (
-                <Button variant="outline" size="sm" onPress={handleLeave}>Выйти</Button>
+                <Button variant="outline" size="sm" className="flex-1 sm:flex-none" onPress={handleLeave}>Выйти</Button>
               ) : (
-                <Button variant="primary" size="sm" onPress={handleJoin}>Вступить</Button>
+                <Button variant="primary" size="sm" className="flex-1 sm:flex-none" onPress={handleJoin}>Вступить</Button>
               )}
             </div>
           </div>
@@ -291,7 +295,7 @@ export default function Community() {
         {/* Tabs */}
         <div className="mt-6 px-0">
           <Tabs defaultSelectedKey="posts">
-            <TabList className="mb-6 px-4">
+            <TabList className="mb-6 -mx-4 overflow-x-auto px-4 whitespace-nowrap [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
               <Tab id="posts">Посты {community.posts.length > 0 && <span className="ml-1 rounded-full bg-surface-secondary px-1.5 py-0.5 text-[10px] font-bold text-muted">{community.posts.length}</span>}</Tab>
               <Tab id="members">Участники {community.members?.length > 0 && <span className="ml-1 rounded-full bg-surface-secondary px-1.5 py-0.5 text-[10px] font-bold text-muted">{community.memberCount}</span>}</Tab>
               <Tab id="about">О сообществе</Tab>
