@@ -2,6 +2,7 @@ import { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button, Text } from '@heroui/react';
 import { ThemeToggle } from '../ThemeToggle.jsx';
+import { MobileBottomNav } from '../MobileBottomNav.jsx';
 import { getProfile } from '../userStore.js';
 
 const INITIAL_CONVERSATIONS = [
@@ -216,6 +217,8 @@ export default function Messages() {
           )}
         </div>
       </div>
+
+      <MobileBottomNav />
     </div>
   );
 }

@@ -12,7 +12,7 @@ import {
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ThemeToggle } from '../ThemeToggle.jsx';
-import { MobileMenuButton } from '../MobileMenu.jsx';
+import { MobileBottomNav } from '../MobileBottomNav.jsx';
 
 const NOTIFS = [
   {
@@ -65,7 +65,6 @@ function BackHeader({ title }) {
       <span className="font-display font-bold tracking-tight text-foreground">{title}</span>
       <div className="ml-auto flex items-center gap-2">
         <ThemeToggle />
-        <MobileMenuButton className="sm:hidden" />
       </div>
     </header>
   );
@@ -84,7 +83,7 @@ export default function Notifications() {
     <div className="flex min-h-dvh flex-col bg-background text-foreground">
       <BackHeader title="Уведомления" />
 
-      <main className="mx-auto w-full max-w-2xl flex-1 px-4 py-6 sm:px-6">
+      <main className="mx-auto w-full max-w-2xl flex-1 px-4 py-6 pb-24 sm:px-6 sm:pb-6">
         <div className="mb-4 flex items-center justify-between">
           <div className="flex items-center gap-2">
             <Text size="sm" variant="muted">
@@ -155,6 +154,8 @@ export default function Notifications() {
           Уведомления хранятся 30 дней
         </Text>
       </main>
+
+      <MobileBottomNav />
     </div>
   );
 }

@@ -22,7 +22,7 @@ import {
 import { useState, useEffect, useRef } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { ThemeToggle } from '../ThemeToggle.jsx';
-import { MobileMenuButton } from '../MobileMenu.jsx';
+import { MobileBottomNav } from '../MobileBottomNav.jsx';
 import { getProfile } from '../userStore.js';
 import {
   getCommunity,
@@ -48,7 +48,6 @@ function BackHeader({ title }) {
       <span className="font-display font-bold tracking-tight text-foreground">{title}</span>
       <div className="ml-auto flex items-center gap-2">
         <ThemeToggle />
-        <MobileMenuButton className="sm:hidden" />
       </div>
     </header>
   );
@@ -234,7 +233,7 @@ export default function Community() {
     <div className="flex min-h-dvh flex-col bg-background text-foreground">
       <BackHeader title={community.name} />
 
-      <main className="mx-auto w-full max-w-2xl flex-1 px-4 py-0 sm:px-6">
+      <main className="mx-auto w-full max-w-2xl flex-1 px-4 py-0 pb-24 sm:px-6 sm:pb-0">
         {/* Cover + hero */}
         <div className={`relative h-40 overflow-hidden bg-gradient-to-br ${community.cover}`}>
           <div className="absolute inset-0 bg-black/10" />
@@ -418,6 +417,8 @@ export default function Community() {
           </Tabs>
         </div>
       </main>
+
+      <MobileBottomNav />
     </div>
   );
 }

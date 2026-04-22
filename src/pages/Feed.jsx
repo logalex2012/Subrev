@@ -41,7 +41,7 @@ import {
 import { useRef, useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ThemeToggle } from '../ThemeToggle.jsx';
-import { MobileMenuButton } from '../MobileMenu.jsx';
+import { MobileBottomNav } from '../MobileBottomNav.jsx';
 import { getChangelog } from '../changelog.js';
 import { getProfile, getFollowing, toggleFollow } from '../userStore.js';
 import { getCommunities } from '../communityStore.js';
@@ -625,7 +625,6 @@ export default function Feed() {
       <header className="sticky top-0 z-30 border-b border-border bg-background/80 backdrop-blur-md">
         <div className="flex items-center justify-between gap-4 px-5 py-3 sm:px-8">
           <div className="flex items-center gap-2.5">
-            <MobileMenuButton className="sm:hidden" />
             <img src="/icon1ej.png" alt="SubreV" className="size-8 rounded-xl" />
             <span className="font-display text-lg font-bold tracking-tight">SubreV</span>
           </div>
@@ -800,7 +799,7 @@ export default function Feed() {
       </header>
 
       {/* Content */}
-      <main className="mx-auto w-full max-w-2xl flex-1 px-4 py-6 sm:px-6">
+      <main className="mx-auto w-full max-w-2xl flex-1 px-4 py-6 pb-24 sm:px-6 sm:pb-6">
         <Tabs defaultSelectedKey="feed">
           <TabList className="mb-6 -mx-4 overflow-x-auto px-4 whitespace-nowrap [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
             <Tab id="feed">Лента</Tab>
@@ -919,6 +918,8 @@ export default function Feed() {
           SubreV © {new Date().getFullYear()} · Школа №1409
         </Text>
       </main>
+
+      <MobileBottomNav />
     </div>
   );
 }
