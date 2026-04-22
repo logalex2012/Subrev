@@ -13,7 +13,7 @@ import {
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ThemeToggle } from '../ThemeToggle.jsx';
-import { MobileMenuButton } from '../MobileMenu.jsx';
+import { MobileBottomNav } from '../MobileBottomNav.jsx';
 import { getProfile, saveProfile } from '../userStore.js';
 
 function BackHeader({ title }) {
@@ -28,7 +28,6 @@ function BackHeader({ title }) {
       <span className="font-display font-bold tracking-tight text-foreground">{title}</span>
       <div className="ml-auto flex items-center gap-2">
         <ThemeToggle />
-        <MobileMenuButton className="sm:hidden" />
       </div>
     </header>
   );
@@ -99,7 +98,7 @@ export default function Settings() {
     <div className="flex min-h-dvh flex-col bg-background text-foreground">
       <BackHeader title="Настройки" />
 
-      <main className="mx-auto w-full max-w-2xl flex-1 px-4 py-6 sm:px-6">
+      <main className="mx-auto w-full max-w-2xl flex-1 px-4 py-6 pb-24 sm:px-6 sm:pb-6">
         {/* Appearance */}
         <SectionTitle>Внешний вид</SectionTitle>
         <Card variant="default">
@@ -227,6 +226,8 @@ export default function Settings() {
 
         <Text size="xs" variant="muted" className="mt-6 block text-center">SubreV v0.1.0 · Школа №1409</Text>
       </main>
+
+      <MobileBottomNav />
     </div>
   );
 }

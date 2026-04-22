@@ -13,7 +13,7 @@ import {
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ThemeToggle } from '../ThemeToggle.jsx';
-import { MobileMenuButton } from '../MobileMenu.jsx';
+import { MobileBottomNav } from '../MobileBottomNav.jsx';
 import { getProfile, saveProfile, getFollowing, toggleFollow } from '../userStore.js';
 
 const MOCK_FOLLOWERS = [
@@ -33,7 +33,6 @@ function BackHeader({ title }) {
       <span className="font-display font-bold tracking-tight text-foreground">{title}</span>
       <div className="ml-auto flex items-center gap-2">
         <ThemeToggle />
-        <MobileMenuButton className="sm:hidden" />
       </div>
     </header>
   );
@@ -150,7 +149,7 @@ export default function Profile() {
     <div className="flex min-h-dvh flex-col bg-background text-foreground">
       <BackHeader title="Профиль" />
 
-      <main className="mx-auto w-full max-w-2xl flex-1 px-4 py-6 sm:px-6">
+      <main className="mx-auto w-full max-w-2xl flex-1 px-4 py-6 pb-24 sm:px-6 sm:pb-6">
         {/* Cover */}
         <div className="relative h-36 overflow-hidden rounded-2xl bg-gradient-to-br from-indigo-500 via-violet-500 to-rose-400">
           <div className="absolute inset-0 bg-black/10" />
@@ -220,6 +219,8 @@ export default function Profile() {
       </main>
 
       {editing && <EditModal profile={profile} onSave={handleSave} onClose={() => setEditing(false)} />}
+
+      <MobileBottomNav />
     </div>
   );
 }

@@ -23,7 +23,7 @@ import {
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ThemeToggle } from '../ThemeToggle.jsx';
-import { MobileMenuButton } from '../MobileMenu.jsx';
+import { MobileBottomNav } from '../MobileBottomNav.jsx';
 import { getCommunities, joinCommunity, leaveCommunity, createCommunity } from '../communityStore.js';
 
 const TYPE_LABELS = { class: 'Класс', channel: 'Канал', community: 'Сообщество' };
@@ -43,7 +43,6 @@ function BackHeader({ title }) {
       <span className="font-display font-bold tracking-tight text-foreground">{title}</span>
       <div className="ml-auto flex items-center gap-2">
         <ThemeToggle />
-        <MobileMenuButton className="sm:hidden" />
       </div>
     </header>
   );
@@ -256,7 +255,7 @@ export default function Communities() {
     <div className="flex min-h-dvh flex-col bg-background text-foreground">
       <BackHeader title="Сообщества" />
 
-      <main className="mx-auto w-full max-w-2xl flex-1 px-4 py-6 sm:px-6">
+      <main className="mx-auto w-full max-w-2xl flex-1 px-4 py-6 pb-24 sm:px-6 sm:pb-6">
         {/* Search + create */}
         <div className="mb-6 flex flex-col gap-2 sm:flex-row">
           <div className="relative flex-1">
@@ -341,6 +340,8 @@ export default function Communities() {
           onCreate={handleCreate}
         />
       )}
+
+      <MobileBottomNav />
     </div>
   );
 }
