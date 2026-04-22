@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { BrowserRouter, Route, Routes, useLocation, useNavigate } from 'react-router-dom';
+import { BrowserRouter, Navigate, Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 import { ToastProvider } from '@heroui/react';
 import App from './App.jsx';
 import { SplashScreen } from './home.jsx';
@@ -22,6 +22,7 @@ import Messages from './pages/Messages.jsx';
 import Communities from './pages/Communities.jsx';
 import Community from './pages/Community.jsx';
 import { isMaintenance } from './siteConfig.js';
+import { isAuthed } from './authStore.js';
 
 /** Redirects to /503 when maintenance mode is on. Admin panel stays accessible. */
 function MaintenanceGuard({ children }) {
@@ -51,6 +52,18 @@ function MaintenanceGuard({ children }) {
   return children;
 }
 
+function RequireAuth({ children }) {
+  const { pathname } = useLocation();
+  const authed = isAuthed();
+  const isAdminRoute = pathname.startsWith('/admin');
+  const isPublic = pathname === '/' || pathname === '/403' || pathname === '/503';
+
+  if (isAdminRoute) return children;
+  if (!authed && !isPublic) return <Navigate to="/" replace />;
+  if (authed && pathname === '/') return <Navigate to="/feed" replace />;
+  return children;
+}
+
 export default function Root() {
   const [splashDone, setSplashDone] = useState(false);
 
@@ -59,33 +72,35 @@ export default function Root() {
       <ToastProvider placement="bottom-end" />
 
       <MaintenanceGuard>
-        <Routes>
-          {/* Main app */}
-          <Route path="/"              element={<App />} />
-          <Route path="/feed"          element={<Feed />} />
-          <Route path="/profile"       element={<Profile />} />
-          <Route path="/settings"      element={<Settings />} />
-          <Route path="/notifications" element={<Notifications />} />
-          <Route path="/messages"      element={<Messages />} />
-          <Route path="/communities"   element={<Communities />} />
-          <Route path="/community/:id" element={<Community />} />
-          <Route path="/403"           element={<Forbidden />} />
-          <Route path="/503"           element={<Unavailable />} />
+        <RequireAuth>
+          <Routes>
+            {/* Main app */}
+            <Route path="/"              element={<App />} />
+            <Route path="/feed"          element={<Feed />} />
+            <Route path="/profile"       element={<Profile />} />
+            <Route path="/settings"      element={<Settings />} />
+            <Route path="/notifications" element={<Notifications />} />
+            <Route path="/messages"      element={<Messages />} />
+            <Route path="/communities"   element={<Communities />} />
+            <Route path="/community/:id" element={<Community />} />
+            <Route path="/403"           element={<Forbidden />} />
+            <Route path="/503"           element={<Unavailable />} />
 
-          {/* Admin panel */}
-          <Route path="/admin/login"       element={<AdminLogin />} />
-          <Route path="/admin"             element={<Dashboard />} />
-          <Route path="/admin/users"       element={<Users />} />
-          <Route path="/admin/posts"       element={<Posts />} />
-          <Route path="/admin/moderation"  element={<Moderation />} />
-          <Route path="/admin/analytics"   element={<Analytics />} />
-          <Route path="/admin/settings"    element={<AdminSettings />} />
-          <Route path="/admin/changelog"   element={<Changelog />} />
-          <Route path="/admin/logs"        element={<Logs />} />
-          <Route path="/admin/roles"       element={<Roles />} />
+            {/* Admin panel */}
+            <Route path="/admin/login"       element={<AdminLogin />} />
+            <Route path="/admin"             element={<Dashboard />} />
+            <Route path="/admin/users"       element={<Users />} />
+            <Route path="/admin/posts"       element={<Posts />} />
+            <Route path="/admin/moderation"  element={<Moderation />} />
+            <Route path="/admin/analytics"   element={<Analytics />} />
+            <Route path="/admin/settings"    element={<AdminSettings />} />
+            <Route path="/admin/changelog"   element={<Changelog />} />
+            <Route path="/admin/logs"        element={<Logs />} />
+            <Route path="/admin/roles"       element={<Roles />} />
 
-          <Route path="*" element={<NotFound />} />
-        </Routes>
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </RequireAuth>
       </MaintenanceGuard>
 
       {!splashDone && <SplashScreen onDone={() => setSplashDone(true)} />}

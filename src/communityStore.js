@@ -2,63 +2,7 @@ const KEY = 'subrev_communities';
 
 let nextPostId = 100;
 
-const INITIAL = [
-  {
-    id: '9a',
-    name: '9А класс',
-    emoji: '🏫',
-    cover: 'from-sky-500 to-indigo-600',
-    description: 'Официальный чат класса 9А школы №1409. Объявления, домашние задания, общение.',
-    type: 'class',
-    memberCount: 28,
-    createdAt: '01.09.2025',
-    joined: true,
-    posts: [
-      { id: 10, author: 'Мария Петрова', initials: 'МП', avatar: null, text: 'Не забудьте! Завтра контрольная по математике 📚 #математика', time: '1 ч назад', reactions: { '❤️': 5, '😮': 2 }, myReaction: null, comments: [] },
-      { id: 11, author: 'Алексей Логинов', initials: 'АЛ', avatar: '/EBB6A530-824E-42D8-B995-E0FD09DCEC5A.jpeg', text: 'Всем привет! Кто идёт на тренировку после уроков? #спорт', time: '3 ч назад', reactions: { '👏': 4, '❤️': 1 }, myReaction: null, comments: [] },
-    ],
-    members: [
-      { id: 'loginov', name: 'Алексей Логинов', initials: 'АЛ', avatar: '/EBB6A530-824E-42D8-B995-E0FD09DCEC5A.jpeg', role: 'Ученик' },
-      { id: 'teacher1', name: 'Мария Петрова', initials: 'МП', avatar: null, role: 'Учитель' },
-      { id: 'student1', name: 'Иван Смирнов', initials: 'ИС', avatar: null, role: 'Ученик' },
-      { id: 'student2', name: 'Анна Козлова', initials: 'АК', avatar: null, role: 'Ученик' },
-    ],
-  },
-  {
-    id: 'newspaper',
-    name: 'Школьная газета',
-    emoji: '📰',
-    cover: 'from-amber-500 to-orange-600',
-    description: 'Новости, события и репортажи школы №1409. Все самое интересное — здесь.',
-    type: 'channel',
-    memberCount: 145,
-    createdAt: '15.09.2025',
-    joined: false,
-    posts: [
-      { id: 20, author: 'Редакция', initials: 'РД', avatar: null, text: '🏆 Поздравляем команду школы с победой на городской олимпиаде по физике! #олимпиада #победа', time: '2 ч назад', reactions: { '❤️': 34, '👏': 28 }, myReaction: null, comments: [] },
-    ],
-    members: [
-      { id: 'editor', name: 'Редакция', initials: 'РД', avatar: null, role: 'Редактор' },
-    ],
-  },
-  {
-    id: 'coding',
-    name: 'Кружок программирования',
-    emoji: '💻',
-    cover: 'from-emerald-500 to-teal-600',
-    description: 'Учимся программировать вместе! Python, JavaScript, алгоритмы. Для всех уровней.',
-    type: 'community',
-    memberCount: 12,
-    createdAt: '01.10.2025',
-    joined: false,
-    posts: [
-      { id: 30, author: 'Алексей Логинов', initials: 'АЛ', avatar: '/EBB6A530-824E-42D8-B995-E0FD09DCEC5A.jpeg', text: 'Сегодня разобрали рекурсию на Python. Кто не был — вот конспект: #python #алгоритмы', time: 'вчера', reactions: { '❤️': 6, '👏': 3 }, myReaction: null, comments: [] },
-    ],
-    members: [
-      { id: 'loginov', name: 'Алексей Логинов', initials: 'АЛ', avatar: '/EBB6A530-824E-42D8-B995-E0FD09DCEC5A.jpeg', role: 'Организатор' },
-    ],
-  },
-];
+const INITIAL = [];
 
 export function getCommunities() {
   try {

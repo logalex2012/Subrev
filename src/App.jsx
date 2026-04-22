@@ -20,8 +20,11 @@ import {
   Separator,
   Text,
   TextField,
+  toast,
 } from '@heroui/react';
 import { ThemeToggle } from './ThemeToggle.jsx';
+import { saveSession } from './authStore.js';
+import { saveProfile } from './userStore.js';
 
 const footerLinks = [
   { href: '#', label: 'О проекте' },
@@ -96,8 +99,12 @@ function BrandPanel() {
 
 function App() {
   const navigate = useNavigate();
-  const [login, setLogin] = useState('');
+  const [step, setStep] = useState('email'); // email | otp
+  const [email, setEmail] = useState('');
+  const [otp, setOtp] = useState('');
+  const [token, setToken] = useState('');
   const [touched, setTouched] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [changelog, setChangelog] = useState(getChangelog);
 
   useEffect(() => {
@@ -106,12 +113,74 @@ function App() {
     return () => window.removeEventListener('changelog:change', sync);
   }, []);
 
-  const isEmpty = login.trim() === '';
+  const isEmpty = email.trim() === '';
   const showError = touched && isEmpty;
 
-  function handleSubmit() {
+  async function requestOtp() {
     setTouched(true);
-    if (!isEmpty) navigate('/feed');
+    if (isEmpty) return;
+    setLoading(true);
+    try {
+      const res = await fetch('/api/request-otp', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: email.trim() }),
+      });
+      const data = await res.json().catch(() => null);
+      if (!res.ok || !data?.ok) throw new Error(data?.error || 'Ошибка отправки');
+      setToken(data.token);
+      setStep('otp');
+      setOtp('');
+      toast.success('Код отправлен', { description: `Проверь почту: ${email.trim()}` });
+    } catch (e) {
+      toast.danger('Не удалось отправить код', { description: String(e?.message || e) });
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  async function verifyOtp() {
+    const cleanEmail = email.trim();
+    const cleanOtp = otp.trim();
+    if (!cleanOtp || cleanOtp.length !== 6) {
+      toast.danger('Введите 6‑значный код');
+      return;
+    }
+    setLoading(true);
+    try {
+      const res = await fetch('/api/verify-otp', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: cleanEmail, otp: cleanOtp, token }),
+      });
+      const data = await res.json().catch(() => null);
+      if (!res.ok || !data?.ok) throw new Error(data?.error || 'Неверный код');
+
+      saveSession({ session: data.session, email: data.email, userId: data.userId });
+      const initials = cleanEmail
+        .split('@')[0]
+        .split(/[.\-_]/g)
+        .filter(Boolean)
+        .slice(0, 2)
+        .map(s => s[0]?.toUpperCase())
+        .join('') || 'U';
+      saveProfile({
+        email: cleanEmail,
+        name: cleanEmail.split('@')[0],
+        initials,
+        avatar: null,
+        bio: '',
+        school: 'Школа №1409',
+        joined: new Date().toLocaleDateString('ru-RU', { year: 'numeric', month: 'long' }),
+      });
+
+      toast.success('Готово!', { description: 'Регистрация завершена' });
+      navigate('/feed');
+    } catch (e) {
+      toast.danger('Не удалось подтвердить код', { description: String(e?.message || e) });
+    } finally {
+      setLoading(false);
+    }
   }
 
   return (
@@ -287,45 +356,86 @@ function App() {
             </div>
 
             <h2 className="font-display text-2xl font-bold tracking-tight text-slate-900 dark:text-white">
-              Добро пожаловать
+              {step === 'email' ? 'Регистрация' : 'Введите код'}
             </h2>
             <p className="mt-1.5 text-sm text-slate-500 dark:text-white/50">
-              Введите свой школьный логин для входа
+              {step === 'email'
+                ? 'Введите почту — мы отправим код подтверждения'
+                : `Мы отправили OTP на ${email.trim()}`}
             </p>
 
             <form
               className="mt-8 flex flex-col gap-5"
-              onSubmit={e => { e.preventDefault(); handleSubmit(); }}
+              onSubmit={e => {
+                e.preventDefault();
+                if (step === 'email') requestOtp();
+                else verifyOtp();
+              }}
             >
-              <TextField
-                fullWidth
-                name="login"
-                autoComplete="username"
-                value={login}
-                onChange={setLogin}
-                isInvalid={showError}
-              >
-                <Label className="font-medium">Логин</Label>
-                <Input placeholder="Например, ivanov" />
-                {showError ? (
-                  <Description className="text-danger">
-                    Введите логин, чтобы продолжить
-                  </Description>
-                ) : (
-                  <Description>
-                    Тот же идентификатор, что и для школьных сервисов
-                  </Description>
-                )}
-              </TextField>
+              {step === 'email' ? (
+                <TextField
+                  fullWidth
+                  name="email"
+                  autoComplete="email"
+                  value={email}
+                  onChange={setEmail}
+                  isInvalid={showError}
+                >
+                  <Label className="font-medium">Почта</Label>
+                  <Input placeholder="name@example.com" />
+                  {showError ? (
+                    <Description className="text-danger">
+                      Введите почту, чтобы продолжить
+                    </Description>
+                  ) : (
+                    <Description>
+                      На неё придёт OTP код
+                    </Description>
+                  )}
+                </TextField>
+              ) : (
+                <TextField
+                  fullWidth
+                  name="otp"
+                  inputMode="numeric"
+                  value={otp}
+                  onChange={setOtp}
+                >
+                  <Label className="font-medium">OTP код</Label>
+                  <Input placeholder="6 цифр" />
+                  <Description>Например: 123456</Description>
+                </TextField>
+              )}
 
               <Button
                 type="submit"
                 fullWidth
                 size="lg"
                 variant="primary"
+                isLoading={loading}
               >
-                Продолжить
+                {step === 'email' ? 'Получить код' : 'Подтвердить'}
               </Button>
+
+              {step === 'otp' && (
+                <div className="flex items-center justify-between">
+                  <button
+                    type="button"
+                    className="text-sm text-slate-500 hover:text-slate-700 dark:text-white/50 dark:hover:text-white/70"
+                    onClick={() => { setStep('email'); setOtp(''); setToken(''); }}
+                  >
+                    ← Изменить почту
+                  </button>
+                  <button
+                    type="button"
+                    className="text-sm text-indigo-600 hover:text-indigo-500 dark:text-indigo-400"
+                    onClick={requestOtp}
+                    disabled={loading}
+                  >
+                    Отправить ещё раз
+                  </button>
+                </div>
+              )}
             </form>
 
             <Separator className="my-7 bg-slate-200 dark:bg-white/10" />

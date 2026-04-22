@@ -14,35 +14,7 @@ import { useNavigate } from 'react-router-dom';
 import { ThemeToggle } from '../ThemeToggle.jsx';
 import { MobileBottomNav } from '../MobileBottomNav.jsx';
 
-const NOTIFS = [
-  {
-    id: 1,
-    type: 'like',
-    avatar: '/favicon.png',
-    initials: '14',
-    text: 'Школа №1409 оценила ваш пост',
-    time: '5 мин назад',
-    read: false,
-  },
-  {
-    id: 2,
-    type: 'comment',
-    avatar: '/favicon.png',
-    initials: '14',
-    text: 'Школа №1409 прокомментировала: «Отличная работа!»',
-    time: '20 мин назад',
-    read: false,
-  },
-  {
-    id: 3,
-    type: 'follow',
-    avatar: '/favicon.png',
-    initials: '14',
-    text: 'Школа №1409 подписалась на вас',
-    time: '1 час назад',
-    read: false,
-  },
-];
+const NOTIFS = [];
 
 const typeIcon = { like: '❤️', comment: '💬', follow: '👤' };
 const typeColor = { like: 'danger', comment: 'accent', follow: 'success' };

@@ -1,9 +1,7 @@
 import { useState } from 'react';
 import AdminLayout from './AdminLayout.jsx';
 
-const DEMO = [
-  { id: 1, author: 'Алексей Логинов', text: 'Тестовый пост в SubreV!', tag: 'Новость', time: '21.04.2026', likes: 0, comments: 0, status: 'ok' },
-];
+const DEMO = [];
 
 const STATUS_LABEL = { ok: 'Одобрен', flagged: 'Жалоба', hidden: 'Скрыт' };
 const STATUS_COLOR = {

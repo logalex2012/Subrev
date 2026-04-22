@@ -16,10 +16,7 @@ import { ThemeToggle } from '../ThemeToggle.jsx';
 import { MobileBottomNav } from '../MobileBottomNav.jsx';
 import { getProfile, saveProfile, getFollowing, toggleFollow } from '../userStore.js';
 
-const MOCK_FOLLOWERS = [
-  { id: 'f1', name: 'Мария Петрова', initials: 'МП' },
-  { id: 'f2', name: 'Иван Смирнов', initials: 'ИС' },
-];
+const MOCK_FOLLOWERS = [];
 
 function BackHeader({ title }) {
   const navigate = useNavigate();

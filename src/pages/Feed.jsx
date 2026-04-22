@@ -50,16 +50,8 @@ const REACTIONS = ['❤️', '😂', '😮', '😢', '👏'];
 
 const INITIAL_POSTS = [];
 
-const MOCK_USERS = [
-  { id: 'teacher1', name: 'Мария Петрова', initials: 'МП', role: 'Учитель', avatar: null },
-  { id: 'student1', name: 'Иван Смирнов', initials: 'ИС', role: 'Ученик 9А', avatar: null },
-  { id: 'student2', name: 'Анна Козлова', initials: 'АК', role: 'Ученик 9А', avatar: null },
-];
-
-const MOCK_FOLLOWING_POSTS = [
-  { id: -1, authorId: 'teacher1', author: 'Мария Петрова', initials: 'МП', avatar: null, time: '2 ч назад', text: 'Завтра контрольная по математике! Не забудьте повторить #производные и #интегралы. Удачи всем! 📚', tag: 'Объявление', privacy: 'public', reactions: { '❤️': 12 }, myReaction: null, comments: [], media: [] },
-  { id: -2, authorId: 'student1', author: 'Иван Смирнов', initials: 'ИС', avatar: null, time: '4 ч назад', text: 'Всем привет! Кто хочет погонять в футбол после уроков? #спорт #9А', tag: 'Вопрос', privacy: 'public', reactions: { '👏': 5 }, myReaction: null, comments: [], media: [] },
-];
+const MOCK_USERS = [];
+const MOCK_FOLLOWING_POSTS = [];
 
 const PRIVACY_OPTIONS = [
   { id: 'public', label: 'Все', icon: '🌍' },

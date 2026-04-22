@@ -16,26 +16,7 @@ const PERMISSIONS = [
   { id: 'manage_settings', label: 'Изменять настройки' },
 ];
 
-const INITIAL_ROLES = [
-  {
-    id: 'student',
-    name: 'Ученик',
-    color: 'bg-sky-500/15 text-sky-400',
-    perms: { create_post: true, delete_own_post: true, delete_any_post: false, comment: true, send_message: true, view_profiles: true, follow: true, repost: true, admin_access: false, manage_users: false, manage_posts: false, manage_settings: false },
-  },
-  {
-    id: 'teacher',
-    name: 'Учитель',
-    color: 'bg-amber-500/15 text-amber-400',
-    perms: { create_post: true, delete_own_post: true, delete_any_post: true, comment: true, send_message: true, view_profiles: true, follow: true, repost: true, admin_access: false, manage_users: false, manage_posts: true, manage_settings: false },
-  },
-  {
-    id: 'admin',
-    name: 'Администратор',
-    color: 'bg-indigo-500/15 text-indigo-400',
-    perms: { create_post: true, delete_own_post: true, delete_any_post: true, comment: true, send_message: true, view_profiles: true, follow: true, repost: true, admin_access: true, manage_users: true, manage_posts: true, manage_settings: true },
-  },
-];
+const INITIAL_ROLES = [];
 
 function Toggle({ value, onChange }) {
   return (

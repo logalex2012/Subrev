@@ -10,14 +10,7 @@ const TYPE_COLOR = {
   moderation: 'bg-red-500/15 text-red-400',
 };
 
-const INITIAL_LOGS = [
-  { id: 1, type: 'auth', actor: 'admin', action: 'Вход в панель администратора', time: '21.04.2026 15:30' },
-  { id: 2, type: 'settings', actor: 'admin', action: 'Изменены настройки сайта: название → "SubreV"', time: '21.04.2026 15:35' },
-  { id: 3, type: 'user', actor: 'admin', action: 'Создан пользователь: Алексей Логинов (loginov)', time: '21.04.2026 15:40' },
-  { id: 4, type: 'settings', actor: 'admin', action: 'Включён режим обслуживания', time: '21.04.2026 15:45' },
-  { id: 5, type: 'settings', actor: 'admin', action: 'Режим обслуживания отключён', time: '21.04.2026 15:47' },
-  { id: 6, type: 'post', actor: 'admin', action: 'Просмотр списка постов', time: '21.04.2026 16:00' },
-];
+const INITIAL_LOGS = [];
 
 export default function Logs() {
   const [logs] = useState(INITIAL_LOGS);

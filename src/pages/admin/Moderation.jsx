@@ -1,9 +1,7 @@
 import { useState } from 'react';
 import AdminLayout from './AdminLayout.jsx';
 
-const REPORTS = [
-  { id: 1, type: 'post', reporter: 'Система', target: 'Тестовый пост', reason: 'Проверка модерации', time: '21.04.2026', status: 'pending' },
-];
+const REPORTS = [];
 
 const STATUS_LABEL = { pending: 'Ожидает', resolved: 'Решено', dismissed: 'Отклонено' };
 const STATUS_COLOR = {

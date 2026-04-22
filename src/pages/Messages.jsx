@@ -5,56 +5,7 @@ import { ThemeToggle } from '../ThemeToggle.jsx';
 import { MobileBottomNav } from '../MobileBottomNav.jsx';
 import { getProfile } from '../userStore.js';
 
-const INITIAL_CONVERSATIONS = [
-  {
-    id: 1,
-    userId: 'teacher1',
-    name: 'Мария Петрова',
-    initials: 'МП',
-    avatar: null,
-    role: 'Учитель',
-    lastMsg: 'Не забудьте сдать работы до пятницы',
-    lastTime: '10:42',
-    unread: 2,
-    messages: [
-      { id: 1, from: 'teacher1', text: 'Добрый день!', time: '10:30' },
-      { id: 2, from: 'me', text: 'Здравствуйте!', time: '10:35' },
-      { id: 3, from: 'teacher1', text: 'Не забудьте сдать работы до пятницы', time: '10:42' },
-    ],
-  },
-  {
-    id: 2,
-    userId: 'student1',
-    name: 'Иван Смирнов',
-    initials: 'ИС',
-    avatar: null,
-    role: 'Ученик 9А',
-    lastMsg: 'Идёшь завтра на тренировку?',
-    lastTime: 'вчера',
-    unread: 0,
-    messages: [
-      { id: 1, from: 'student1', text: 'Привет!', time: '15:00' },
-      { id: 2, from: 'me', text: 'Привет)', time: '15:05' },
-      { id: 3, from: 'student1', text: 'Идёшь завтра на тренировку?', time: '15:10' },
-    ],
-  },
-  {
-    id: 3,
-    userId: 'student2',
-    name: 'Анна Козлова',
-    initials: 'АК',
-    avatar: null,
-    role: 'Ученик 9А',
-    lastMsg: 'Спасибо за помощь!',
-    lastTime: 'пн',
-    unread: 0,
-    messages: [
-      { id: 1, from: 'me', text: 'Привет, как дела?', time: '14:00' },
-      { id: 2, from: 'student2', text: 'Отлично, спасибо!', time: '14:20' },
-      { id: 3, from: 'student2', text: 'Спасибо за помощь!', time: '14:21' },
-    ],
-  },
-];
+const INITIAL_CONVERSATIONS = [];
 
 function Avatar({ initials, src, size = 'md' }) {
   const sz = size === 'sm' ? 'size-8 text-xs' : size === 'lg' ? 'size-12 text-base' : 'size-10 text-sm';

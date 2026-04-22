@@ -2,12 +2,13 @@ const PROFILE_KEY = 'subrev_profile';
 const FOLLOWING_KEY = 'subrev_following';
 
 const DEFAULTS = {
-  name: 'Алексей Логинов',
-  avatar: '/EBB6A530-824E-42D8-B995-E0FD09DCEC5A.jpeg',
-  initials: 'АЛ',
-  bio: 'Ученик школы №1409 · Разработчик SubreV',
+  email: '',
+  name: '',
+  avatar: null,
+  initials: '',
+  bio: '',
   school: 'Школа №1409',
-  joined: 'Апрель 2026',
+  joined: '',
 };
 
 export function getProfile() {

@@ -4,11 +4,9 @@ import AdminLayout from './AdminLayout.jsx';
 const ROLES = ['Ученик', 'Учитель', 'Администратор'];
 const CLASSES = ['5А', '5Б', '6А', '6Б', '7А', '7Б', '8А', '8Б', '9А', '9Б', '10А', '10Б', '11А', '11Б', '-'];
 
-const INITIAL_USERS = [
-  { id: 1, name: 'Алексей Логинов', login: 'loginov', role: 'Администратор', class: '-', status: 'active', joined: '21.04.2026' },
-];
+const INITIAL_USERS = [];
 
-let nextId = 2;
+let nextId = 1;
 
 function Badge({ status }) {
   return (
